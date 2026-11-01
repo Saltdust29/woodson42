@@ -1,0 +1,24 @@
+{
+  "name": "woodson42-journal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:assets": "vite build",
+    "build:site": "node scripts/run-python.js -m pelican content -s pelicanconf.py",
+    "build": "pnpm run build:assets && pnpm run build:site",
+    "dev": "node scripts/dev.js",
+    "test": "node scripts/run-python.js -m pytest -q"
+  },
+  "dependencies": {
+    "vue": "3.6.0-rc.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.8",
+    "vite": "8.1.5"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  },
+  "packageManager": "pnpm@11.15.1"
+}

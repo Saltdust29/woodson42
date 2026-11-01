@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found — {{ SITENAME }}{% endblock %}
+{% block body_class %}error-page{% endblock %}
+
+{% block content %}
+<section class="archive-sheet error-sheet">
+  <header class="archive-header">
+    <p class="eyebrow">Misfiled / 404</p>
+    <h1>Page not found.</h1>
+    <p>This address has slipped out of the archive, or perhaps it was never filed.</p>
+  </header>
+  <a class="error-sheet__link" href="{{ SITEURL }}/">Return to the front page <span aria-hidden="true">→</span></a>
+</section>
+{% endblock %}

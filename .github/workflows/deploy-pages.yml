@@ -1,4 +1,4 @@
-name: Deploy Pelican site to GitHub Pages
+name: Deploy Pelican and Vue site to GitHub Pages
 
 on:
   push:
@@ -22,6 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.15.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -30,11 +41,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          pnpm install --frozen-lockfile
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -r requirements.txt
 
       - name: Build site
-        run: python -m pelican content -s pelicanconf.py
+        run: pnpm run build
+
+      - name: Test integrated output
+        run: pnpm test
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

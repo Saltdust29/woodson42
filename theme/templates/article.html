@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} — {{ SITENAME }}{% endblock %}
+{% block description %}{{ article.summary | striptags }}{% endblock %}
+{% block body_class %}article-page{% endblock %}
+
+{% block content %}
+<article class="article-sheet">
+  <header class="article-header">
+    <p class="eyebrow"><a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a> / {{ article.locale_date }}</p>
+    <h1>{{ article.title }}</h1>
+    <div class="article-header__deck">{{ article.summary }}</div>
+    <div class="article-byline">
+      <span>Words by {{ article.author }}</span>
+      <span>{{ article.reading | default("3 min read") }}</span>
+    </div>
+  </header>
+
+  <div class="article-layout">
+    <aside class="article-aside">
+      <span class="article-aside__rule"></span>
+      <p>Filed under</p>
+      <ul>
+        {% for tag in article.tags %}
+        <li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <div class="article-content">
+      {{ article.content }}
+    </div>
+  </div>
+
+  <footer class="article-footer">
+    <p>End of dispatch.</p>
+    <a href="{{ SITEURL }}/archive/">Continue through the archive <span aria-hidden="true">→</span></a>
+  </footer>
+</article>
+{% endblock %}

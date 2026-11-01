@@ -1,0 +1,15 @@
+{% macro story_row(article, number, featured=false) -%}
+<article class="story-row{% if featured %} story-row--featured{% endif %}">
+  <div class="story-row__number" aria-hidden="true">{{ "%02d" | format(number) }}</div>
+  <div class="story-row__body">
+    <div class="story-meta">
+      <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+      <span>{{ article.locale_date }}</span>
+      <span>{{ article.reading | default("3 min read") }}</span>
+    </div>
+    <h3><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+    <div class="story-summary">{{ article.summary }}</div>
+  </div>
+  <a class="story-row__arrow" href="{{ SITEURL }}/{{ article.url }}" aria-label="Read {{ article.title }}">↗</a>
+</article>
+{%- endmacro %}

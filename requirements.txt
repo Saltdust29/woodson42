@@ -1,2 +1,2 @@
-pelican>=4.9,<5
+pelican[markdown]>=4.12,<5
 pytest>=8,<9

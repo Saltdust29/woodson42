@@ -1,0 +1,77 @@
+{% set vite = vite_entry('frontend/main.js') %}
+<!doctype html>
+<html lang="{{ DEFAULT_LANG }}" data-theme="paper">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eee7d7">
+  <meta name="description" content="{% block description %}{{ SITE_SUBTITLE }}{% endblock %}">
+  <title>{% block title %}{{ SITENAME }} — Field Notes{% endblock %}</title>
+  <link rel="icon" href="{{ SITEURL }}/theme/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem('journal-theme') || 'paper'
+  </script>
+  {% if vite.dev %}
+  <script type="module" src="{{ vite.client }}"></script>
+  <script type="module" src="{{ vite.file }}"></script>
+  {% else %}
+    {% for stylesheet in vite.css %}
+  <link rel="stylesheet" href="{{ SITEURL }}/theme/dist/{{ stylesheet }}">
+    {% endfor %}
+    {% for preload in vite.preloads %}
+  <link rel="modulepreload" href="{{ SITEURL }}/theme/dist/{{ preload }}">
+    {% endfor %}
+  <script type="module" src="{{ SITEURL }}/theme/dist/{{ vite.file }}"></script>
+  {% endif %}
+</head>
+<body id="top" class="{% block body_class %}{% endblock %}">
+  <a class="skip-link" href="#main-content">Skip to the journal</a>
+
+  <div class="paper-shell">
+    <header class="site-header">
+      <div class="edition-line" aria-label="Publication details">
+        <span>Independent web journal</span>
+        <span class="edition-line__center">Vol. I&nbsp;&nbsp;·&nbsp;&nbsp;No. 42</span>
+        <span>Shanghai / UTC+8</span>
+      </div>
+
+      <a class="masthead" href="{{ SITEURL }}/" aria-label="{{ SITENAME }} home">
+        <span class="masthead__word">woodson</span>
+        <span class="masthead__mark" aria-hidden="true">42</span>
+      </a>
+
+      <div class="nav-line">
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="{{ SITEURL }}/">Front page</a>
+          <a href="{{ SITEURL }}/archive/">Archive</a>
+          <a href="{{ SITEURL }}/about/">Colophon</a>
+        </nav>
+        <div
+          id="vue-tools"
+          data-search-url="{{ SITEURL }}/search.json"
+          data-home-url="{{ SITEURL }}/"
+        ></div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <span class="footer-mark">W42</span>
+        <p>{{ SITE_SUBTITLE }}</p>
+      </div>
+      <div class="site-footer__meta">
+        <p>Typeset with Pelican &amp; Vue.</p>
+        <p>© {{ CURRENT_YEAR }} {{ AUTHOR }}.</p>
+      </div>
+      <a class="return-link" href="#top" aria-label="Return to top">Return to top ↑</a>
+    </footer>
+  </div>
+</body>
+</html>

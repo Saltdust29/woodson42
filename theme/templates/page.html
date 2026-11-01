@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — {{ SITENAME }}{% endblock %}
+{% block description %}{{ page.summary | default(SITE_SUBTITLE) | striptags }}{% endblock %}
+{% block body_class %}page-page{% endblock %}
+
+{% block content %}
+<article class="page-sheet">
+  <header class="page-header">
+    <p class="eyebrow">Permanent record</p>
+    <h1>{{ page.title }}</h1>
+  </header>
+  <div class="article-content page-content">
+    {{ page.content }}
+  </div>
+</article>
+{% endblock %}

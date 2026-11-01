@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "macros.html" import story_row with context %}
+
+{% block title %}{{ tag }} — {{ SITENAME }}{% endblock %}
+{% block body_class %}listing-page{% endblock %}
+
+{% block content %}
+<section class="listing-sheet">
+  <header class="archive-header">
+    <p class="eyebrow">Index term</p>
+    <h1>{{ tag }}</h1>
+    <p>{{ articles | length }} related dispatch{% if articles | length != 1 %}es{% endif %}.</p>
+  </header>
+  <div class="story-list">
+    {% for article in articles %}
+      {{ story_row(article, loop.index, loop.first) }}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

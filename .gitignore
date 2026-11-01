@@ -4,3 +4,4 @@ _site
 __pycache__/
 .pytest_cache/
 output
+theme/static/dist

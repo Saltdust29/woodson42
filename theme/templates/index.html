@@ -1,58 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reality Is But An Illusion.</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap"
-    rel="stylesheet"
-  >
-  <style>
-    :root {
-      color-scheme: dark;
-    }
+{% extends "base.html" %}
+{% from "macros.html" import story_row with context %}
+{% set entries = articles_page.object_list if articles_page else articles %}
 
-    * {
-      box-sizing: border-box;
-    }
+{% block body_class %}home-page{% endblock %}
 
-    html {
-      background: #000;
-    }
+{% block content %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__lead">
+    <p class="eyebrow"><span>Editor’s letter</span> / 001</p>
+    <h1 id="hero-title">
+      <span>Reality is but</span>
+      <em>an illusion.</em>
+    </h1>
+    <p class="hero__deck">{{ SITE_SUBTITLE }} A quiet place for ideas before they become answers.</p>
+  </div>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      background: #000;
-      color: #fff;
-    }
+  <aside class="hero__folio" aria-label="Issue note">
+    <p class="folio-number">42</p>
+    <div>
+      <p>Notes from the edge of the ordinary.</p>
+      <p class="folio-detail">Est. MMXXVI<br>Updated irregularly</p>
+    </div>
+  </aside>
+</section>
 
-    main {
-      width: min(92vw, 1200px);
-      padding: clamp(1.5rem, 4vw, 3rem);
-    }
+<section class="journal-section" aria-labelledby="latest-heading">
+  <header class="section-heading">
+    <p>Filed observations</p>
+    <h2 id="latest-heading">Latest dispatches</h2>
+    <a href="{{ SITEURL }}/archive/">Complete archive <span aria-hidden="true">→</span></a>
+  </header>
 
-    h1 {
-      margin: 0;
-      text-align: center;
-      font-family: "Cormorant Garamond", "Times New Roman", serif;
-      font-size: clamp(3.2rem, 8.4vw, 7rem);
-      font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: 0.03em;
-      text-wrap: balance;
-    }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Reality Is But An Illusion.</h1>
-  </main>
-</body>
-</html>
+  <div class="story-list">
+    {% if entries %}
+      {% for article in entries %}
+        {{ story_row(article, loop.index, loop.first) }}
+      {% endfor %}
+    {% else %}
+      <div class="empty-edition">
+        <p class="eyebrow">The presses are quiet</p>
+        <h3>The first dispatch is still being typeset.</h3>
+        <p>Return soon. The blank page is part of the record.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="index-notes" aria-label="Journal index">
+  <div class="index-notes__statement">
+    <p class="eyebrow">Working principle</p>
+    <blockquote>“Keep only what remains interesting after the noise has passed.”</blockquote>
+  </div>
+
+  <div class="index-notes__topics">
+    <p class="eyebrow">Current index</p>
+    <ul>
+      {% for tag, tagged_articles in tags %}
+      <li>
+        <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+        <span>{{ "%02d" | format(tagged_articles | length) }}</span>
+      </li>
+      {% else %}
+      <li><span>Unclassified</span><span>00</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}
