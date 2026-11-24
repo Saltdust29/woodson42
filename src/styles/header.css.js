@@ -36,13 +36,13 @@ globalStyle(".masthead", {
   "display": "flex",
   "alignItems": "center",
   "justifyContent": "center",
-  "minHeight": "clamp(7rem, 19vw, 14rem)",
+  "minHeight": "clamp(5rem, min(16vw, 15vh), 14rem)",
   "textDecoration": "none"
 })
 
 globalStyle(".masthead__word", {
   "marginLeft": "-0.04em",
-  "fontSize": "clamp(4.3rem, 20vw, 14.75rem)",
+  "fontSize": "clamp(3.4rem, min(19vw, 14vh), 14.75rem)",
   "fontWeight": "300",
   "letterSpacing": "-0.078em",
   "lineHeight": "0.72"
@@ -50,7 +50,7 @@ globalStyle(".masthead__word", {
 
 globalStyle(".masthead__mark", {
   "display": "grid",
-  "width": "clamp(2.55rem, 5vw, 4.5rem)",
+  "width": "clamp(2.1rem, min(5vw, 5vh), 4.5rem)",
   "aspectRatio": "1",
   "marginLeft": "clamp(0.25rem, 1vw, 1rem)",
   "placeItems": "center",
@@ -159,3 +159,21 @@ globalStyle(".site-nav a:hover::after", {
   }
 })
 
+
+globalStyle(".masthead", {
+  "@media (max-width: 39.99rem)": {
+    "minHeight": "3.25rem"
+  }
+})
+
+globalStyle(".edition-line", {
+  "@media (max-width: 39.99rem)": {
+    "padding": "0.4rem 0"
+  }
+})
+
+globalStyle(".site-header", {
+  "@media (max-width: 39.99rem)": {
+    "paddingTop": "0.6rem"
+  }
+})

@@ -37,15 +37,9 @@ function journalDevServer() {
         if (request.method !== 'GET') return next()
 
         try {
-          const { renderApp, headScripts, pageHead, searchIndex } = await server.ssrLoadModule(
+          const { renderApp, headScripts, pageHead } = await server.ssrLoadModule(
             '/src/entry-server.jsx',
           )
-
-          if (pathname === '/search.json') {
-            response.setHeader('content-type', 'application/json')
-            response.end(JSON.stringify(searchIndex))
-            return
-          }
 
           if (pathname.startsWith('/@') || pathname.startsWith('/node_modules/')) return next()
           if (ASSET_REQUEST.test(pathname)) return next()

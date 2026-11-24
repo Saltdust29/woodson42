@@ -1,38 +1,17 @@
-import {
-  archiveData,
-  contentPaths,
-  findArticle,
-  findCategory,
-  findPage,
-  findTag,
-  homeData,
-} from './lib/content.js'
+import { contentPaths, findPage } from './lib/content.js'
 
 const NOT_FOUND = { name: 'notFound', params: {}, data: null }
 
 const PATTERNS = [
   { name: 'home', segments: [] },
-  { name: 'archive', segments: ['archive'] },
-  { name: 'article', segments: ['journal', ':year', ':slug'] },
-  { name: 'section', segments: ['section', ':slug'] },
-  { name: 'topic', segments: ['topic', ':slug'] },
   { name: 'page', segments: [':page'] },
 ]
 
 function resolve(name, params) {
-  if (name === 'home') return { name, params, data: homeData }
-  if (name === 'archive') return { name, params, data: archiveData }
+  if (name === 'home') return { name, params, data: null }
 
-  const data =
-    name === 'article'
-      ? findArticle(params.year, params.slug)
-      : name === 'section'
-        ? findCategory(params.slug)
-        : name === 'topic'
-          ? findTag(params.slug)
-          : findPage(params.page)
-
-  return data ? { name, params, data } : NOT_FOUND
+  const page = findPage(params.page)
+  return page ? { name, params, data: page } : NOT_FOUND
 }
 
 export function matchRoute(pathname) {
@@ -66,7 +45,7 @@ export function matchRoute(pathname) {
 }
 
 export function prerenderPaths() {
-  return ['/', '/archive/', '/404/', ...contentPaths]
+  return ['/', '/404/', ...contentPaths]
 }
 
 export { NOT_FOUND }

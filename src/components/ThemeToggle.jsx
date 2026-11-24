@@ -1,3 +1,5 @@
+import '../styles/tools.css.js'
+
 import { usePreference } from '@ui-sdk/solid/preferences'
 import { Toggle, ToggleIcon } from '@ui-sdk/solid/toggle'
 

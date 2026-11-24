@@ -3,7 +3,6 @@ import path from 'node:path'
 
 import fg from 'fast-glob'
 
-import { groupCategories, groupTags } from './content-model.js'
 import { SITE, slugify } from './site.js'
 
 const CONTENT = path.resolve('content')
@@ -27,18 +26,6 @@ function parseFrontmatter(raw) {
   return { data, body: body.trim() }
 }
 
-function parseDate(value) {
-  const match = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/.exec(value ?? '')
-  if (!match) return null
-
-  const [, year, month, day, hours = '00', minutes = '00'] = match
-  const iso = `${year}-${month}-${day}T${hours}:${minutes}:00+08:00`
-  const timestamp = Date.parse(iso)
-  if (Number.isNaN(timestamp)) return null
-
-  return { iso, year, timestamp }
-}
-
 function readMarkdown(directory) {
   const pattern = path.join(directory, '*.md').replaceAll('\\', '/')
   return fg.sync(pattern, { onlyFiles: true }).sort().map((file) => ({
@@ -47,66 +34,16 @@ function readMarkdown(directory) {
   }))
 }
 
-function toArticle(entry) {
-  const { data, body } = entry
-  const date = parseDate(data.date)
-  if (!date) return null
-
-  const slug = data.slug || slugify(path.basename(entry.file, '.md'))
-  const category = data.category || 'Uncategorized'
-  const tags = (data.tags ?? '')
-    .split(',')
-    .map((tag) => tag.trim())
-    .filter(Boolean)
-
-  return {
-    title: data.title || slug,
-    slug,
-    url: `/journal/${date.year}/${slug}/`,
-    date: date.iso,
-    year: date.year,
-    timestamp: date.timestamp,
-    category,
-    categorySlug: slugify(category),
-    categoryUrl: `/section/${slugify(category)}/`,
-    tags,
-    tagUrls: tags.map((tag) => ({ name: tag, slug: slugify(tag), url: `/topic/${slugify(tag)}/` })),
-    summary: data.summary || '',
-    reading: data.reading || '3 min read',
-    body,
-  }
-}
-
-function toPage(entry) {
-  const { data, body } = entry
-  const slug = data.slug || slugify(path.basename(entry.file, '.md'))
-
-  return {
-    title: data.title || slug,
-    slug,
-    url: `/${slug}/`,
-    summary: data.summary || SITE.subtitle,
-    body,
-  }
-}
-
-export function loadArticles() {
-  return readMarkdown(path.join(CONTENT, 'articles'))
-    .map(toArticle)
-    .filter(Boolean)
-    .sort((a, b) => b.timestamp - a.timestamp)
-}
-
 export function loadPages() {
-  return readMarkdown(path.join(CONTENT, 'pages')).map(toPage)
-}
+  return readMarkdown(path.join(CONTENT, 'pages')).map(({ data, body, file }) => {
+    const slug = data.slug || slugify(path.basename(file, '.md'))
 
-export function contentRoutes() {
-  const articles = loadArticles()
-  return [
-    ...articles.map((article) => article.url),
-    ...loadPages().map((page) => page.url),
-    ...groupCategories(articles).map((category) => category.url),
-    ...groupTags(articles).map((tag) => tag.url),
-  ]
+    return {
+      title: data.title || slug,
+      slug,
+      url: `/${slug}/`,
+      summary: data.summary || SITE.subtitle,
+      body,
+    }
+  })
 }

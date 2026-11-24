@@ -24,7 +24,7 @@ const serverEntry = fs
   .find((file) => file.startsWith('entry-server') && file.endsWith('.js'))
 if (!serverEntry) throw new Error(`no server entry in ${SERVER_DIR}`)
 
-const { render, prerenderPaths, searchIndex } = await import(
+const { render, prerenderPaths } = await import(
   `${path.join(SERVER_DIR, serverEntry)}?t=${Date.now()}`
 )
 
@@ -47,6 +47,3 @@ for (const pathname of prerenderPaths()) {
   fs.writeFileSync(file, render(pathname, assets))
   console.log(`prerendered ${pathname}`)
 }
-
-fs.writeFileSync(path.join(PUBLIC_DIR, 'search.json'), `${JSON.stringify(searchIndex, null, 2)}\n`)
-console.log('build: wrote search.json')

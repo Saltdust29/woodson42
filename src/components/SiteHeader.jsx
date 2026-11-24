@@ -1,7 +1,7 @@
 import '../styles/header.css.js'
 
 import { SITE } from '../lib/site.js'
-import SearchPalette from './SearchPalette.jsx'
+import ThemeToggle from './ThemeToggle.jsx'
 
 export default function SiteHeader() {
   return (
@@ -21,11 +21,13 @@ export default function SiteHeader() {
 
       <div class="nav-line">
         <nav class="site-nav" aria-label="Primary navigation">
-          <a href="/">Front page</a>
-          <a href="/archive/">Archive</a>
           <a href="/about/">Colophon</a>
         </nav>
-        <SearchPalette />
+        <div class="journal-tools-shell">
+          <div class="journal-tools">
+            <ThemeToggle />
+          </div>
+        </div>
       </div>
     </header>
   )

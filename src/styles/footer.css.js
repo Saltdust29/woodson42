@@ -2,8 +2,8 @@ import { globalStyle } from '@vanilla-extract/css'
 
 globalStyle(".site-footer", {
   "display": "grid",
-  "gap": "2rem",
-  "padding": "clamp(3rem, 7vw, 5.5rem) 0 max(3rem, env(safe-area-inset-bottom))",
+  "gap": "clamp(1rem, 2.5vw, 2rem)",
+  "padding": "clamp(1.4rem, 4.5vh, 5.5rem) 0 max(1.4rem, env(safe-area-inset-bottom))",
   "fontSize": "0.76rem",
   "letterSpacing": "0.06em",
   "lineHeight": "1.5",
@@ -46,3 +46,10 @@ globalStyle(".return-link", {
   }
 })
 
+
+globalStyle(".site-footer", {
+  "@media (max-width: 39.99rem)": {
+    "gap": "0.55rem",
+    "padding": "0.85rem 0 max(0.85rem, env(safe-area-inset-bottom))"
+  }
+})

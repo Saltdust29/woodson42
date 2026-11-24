@@ -2,7 +2,6 @@ import { generateHydrationScript, renderToString } from '@solidjs/web'
 import { preferencesScript } from '@ui-sdk/core'
 
 import App from './app.jsx'
-import { searchIndex } from './lib/content.js'
 import { documentPage } from './lib/document.js'
 import { headFor } from './lib/meta.js'
 import { theme } from './lib/preferences.js'
@@ -29,4 +28,4 @@ function render(pathname, assets) {
   })
 }
 
-export { headScripts, pageHead, prerenderPaths, render, renderApp, searchIndex }
+export { headScripts, pageHead, prerenderPaths, render, renderApp }

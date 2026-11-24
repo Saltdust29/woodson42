@@ -2,17 +2,18 @@ import { globalStyle } from '@vanilla-extract/css'
 
 import { reveal } from './global.css.js'
 
-globalStyle(".hero", {
+globalStyle(".banner", {
   "position": "relative",
   "display": "grid",
-  "gap": "clamp(3rem, 8vw, 7rem)",
-  "padding": "clamp(4rem, 10vw, 9rem) 0 clamp(4.5rem, 11vw, 10rem)",
-  "borderBottom": "1px solid var(--ink)"
+  "flex": "1 0 auto",
+  "alignContent": "center",
+  "gap": "clamp(1.5rem, 4vh, 7rem)",
+  "padding": "clamp(1.5rem, 4.5vh, 6rem) 0 clamp(1.25rem, 3vh, 4rem)"
 })
 
-globalStyle(".hero::before", {
+globalStyle(".banner::before", {
   "position": "absolute",
-  "top": "2.25rem",
+  "top": "0.4rem",
   "left": "0",
   "width": "3rem",
   "height": "0.3rem",
@@ -34,34 +35,34 @@ globalStyle(".eyebrow span, .eyebrow a", {
   "color": "var(--accent-dark)"
 })
 
-globalStyle(".hero h1", {
-  "maxWidth": "10ch",
+globalStyle(".banner h1", {
+  "maxWidth": "9ch",
   "margin": "1.5rem 0 0 -0.055em",
-  "fontSize": "clamp(4.35rem, 13vw, 11.5rem)",
+  "fontSize": "clamp(3.6rem, min(15vw, 17vh), 13rem)",
   "fontWeight": "300",
-  "letterSpacing": "-0.072em",
+  "letterSpacing": "-0.075em",
   "lineHeight": "0.76"
 })
 
-globalStyle(".hero h1 span, .hero h1 em", {
+globalStyle(".banner h1 span, .banner h1 em", {
   "display": "block"
 })
 
-globalStyle(".hero h1 em", {
-  "marginLeft": "clamp(0rem, 8vw, 7rem)",
+globalStyle(".banner h1 em", {
+  "marginLeft": "clamp(0rem, 9vw, 8rem)",
   "color": "var(--accent-dark)",
   "fontWeight": "400"
 })
 
-globalStyle(".hero__deck", {
-  "maxWidth": "37ch",
-  "margin": "2.25rem 0 0",
+globalStyle(".banner__deck", {
+  "maxWidth": "42ch",
+  "margin": "clamp(1.25rem, 3vh, 2.25rem) 0 0",
   "color": "var(--ink-soft)",
   "fontSize": "clamp(1.15rem, 2.2vw, 1.65rem)",
   "lineHeight": "1.42"
 })
 
-globalStyle(".hero__folio", {
+globalStyle(".banner__folio", {
   "display": "grid",
   "gridTemplateColumns": "auto 1fr",
   "gap": "1.5rem",
@@ -70,18 +71,18 @@ globalStyle(".hero__folio", {
   "borderTop": "1px solid var(--ink)"
 })
 
-globalStyle(".hero__folio p", {
+globalStyle(".banner__folio p", {
   "margin": "0"
 })
 
 globalStyle(".folio-number", {
   "color": "var(--accent-dark)",
-  "fontSize": "clamp(4rem, 12vw, 8rem)",
+  "fontSize": "clamp(3rem, min(12vw, 12vh), 8rem)",
   "fontWeight": "300",
   "lineHeight": "0.73"
 })
 
-globalStyle(".hero__folio > div > p:first-child", {
+globalStyle(".banner__folio > div > p:first-child", {
   "maxWidth": "18ch",
   "fontSize": "1.1rem",
   "fontStyle": "italic",
@@ -98,240 +99,22 @@ globalStyle(".folio-detail", {
   "textTransform": "uppercase"
 })
 
-globalStyle(".journal-section, .listing-sheet", {
-  "padding": "clamp(4rem, 9vw, 8rem) 0"
-})
-
-globalStyle(".section-heading", {
-  "display": "grid",
-  "gap": "0.8rem",
-  "alignItems": "end",
-  "marginBottom": "clamp(2rem, 5vw, 4rem)"
-})
-
-globalStyle(".section-heading p, .section-heading a", {
-  "margin": "0",
-  "fontFamily": "'Archivo Narrow', sans-serif",
-  "fontSize": "0.75rem",
-  "fontWeight": "600",
-  "letterSpacing": "0.12em",
-  "textTransform": "uppercase"
-})
-
-globalStyle(".section-heading p", {
-  "color": "var(--accent-dark)"
-})
-
-globalStyle(".section-heading h2", {
-  "margin": "0",
-  "fontSize": "clamp(2.6rem, 6vw, 5.25rem)",
-  "fontWeight": "300",
-  "letterSpacing": "-0.055em",
-  "lineHeight": "0.9"
-})
-
-globalStyle(".section-heading a", {
-  "justifySelf": "start"
-})
-
-globalStyle(".story-list", {
-  "containerType": "inline-size",
-  "borderTop": "1px solid var(--ink)"
-})
-
-globalStyle(".story-row", {
-  "display": "grid",
-  "gridTemplateColumns": "2.35rem minmax(0, 1fr) 2rem",
-  "gap": "0.75rem",
-  "alignItems": "start",
-  "padding": "1.5rem 0",
-  "borderBottom": "1px solid var(--rule-soft)"
-})
-
-globalStyle(".story-row__number, .story-row__arrow", {
-  "fontFamily": "'Archivo Narrow', sans-serif",
-  "fontSize": "0.75rem",
-  "fontWeight": "600",
-  "letterSpacing": "0.08em"
-})
-
-globalStyle(".story-row__number", {
-  "paddingTop": "0.25rem",
-  "color": "var(--accent-dark)"
-})
-
-globalStyle(".story-row__arrow", {
-  "display": "grid",
-  "minWidth": "2rem",
-  "minHeight": "2rem",
-  "placeItems": "center",
-  "fontSize": "1rem",
-  "textDecoration": "none"
-})
-
-globalStyle(".story-meta", {
-  "display": "flex",
-  "flexWrap": "wrap",
-  "gap": "0.3rem 1rem",
-  "marginBottom": "0.65rem",
-  "color": "var(--ink-faint)",
-  "fontSize": "0.7rem",
-  "fontWeight": "500",
-  "letterSpacing": "0.09em",
-  "textTransform": "uppercase"
-})
-
-globalStyle(".story-meta a", {
-  "color": "var(--accent-dark)"
-})
-
-globalStyle(".story-row h3", {
-  "margin": "0",
-  "fontSize": "clamp(1.65rem, 4vw, 2.65rem)",
-  "fontWeight": "400",
-  "letterSpacing": "-0.035em",
-  "lineHeight": "1"
-})
-
-globalStyle(".story-row h3 a", {
-  "textDecoration": "none"
-})
-
-globalStyle(".story-summary", {
-  "maxWidth": "55ch",
-  "marginTop": "0.85rem",
-  "color": "var(--ink-soft)",
-  "fontSize": "1rem",
-  "lineHeight": "1.55"
-})
-
-globalStyle(".story-summary p", {
-  "margin": "0"
-})
-
-globalStyle(".empty-edition", {
-  "padding": "4rem 0"
-})
-
-globalStyle(".empty-edition h3", {
-  "maxWidth": "18ch",
-  "margin": "1rem 0",
-  "fontSize": "clamp(2rem, 5vw, 4rem)",
-  "fontWeight": "300",
-  "letterSpacing": "-0.04em",
-  "lineHeight": "0.95"
-})
-
-globalStyle(".index-notes", {
-  "display": "grid",
-  "gap": "clamp(3.5rem, 8vw, 7rem)",
-  "padding": "clamp(4.5rem, 10vw, 9rem) 0",
-  "borderBlock": "3px double var(--ink)"
-})
-
-globalStyle(".index-notes blockquote", {
-  "maxWidth": "18ch",
-  "margin": "1.5rem 0 0",
-  "fontSize": "clamp(2.25rem, 5vw, 4.75rem)",
-  "fontWeight": "300",
-  "letterSpacing": "-0.05em",
-  "lineHeight": "0.98"
-})
-
-globalStyle(".index-notes__topics ul", {
-  "margin": "1.5rem 0 0",
-  "padding": "0",
-  "listStyle": "none",
-  "borderTop": "1px solid var(--ink)"
-})
-
-globalStyle(".index-notes__topics li", {
-  "display": "flex",
-  "justifyContent": "space-between",
-  "gap": "1rem",
-  "padding": "0.8rem 0",
-  "borderBottom": "1px solid var(--rule-soft)",
-  "fontSize": "1.15rem"
-})
-
-globalStyle(".index-notes__topics li span", {
-  "color": "var(--ink-faint)",
-  "fontFamily": "'Archivo Narrow', sans-serif",
-  "fontSize": "0.75rem"
-})
-
-globalStyle(".hero__lead, .hero__folio, .journal-section, .index-notes", {
+globalStyle(".banner__lead, .banner__folio", {
   "animation": `${reveal} 720ms cubic-bezier(0.16, 1, 0.3, 1) both`
 })
 
-globalStyle(".hero__folio", {
+globalStyle(".banner__folio", {
   "animationDelay": "80ms"
 })
 
-globalStyle(".journal-section", {
-  "animationDelay": "140ms"
-})
-
-globalStyle(".index-notes", {
-  "animationDelay": "200ms"
-})
-
-globalStyle(".story-row", {
-  "@container (min-width: 42rem)": {
-    "gridTemplateColumns": "3rem minmax(0, 1fr) 2.5rem",
-    "gap": "1.5rem",
-    "padding": "2rem 0"
-  }
-})
-
-globalStyle(".story-row--featured", {
-  "@container (min-width: 42rem)": {
-    "paddingBlock": "2.8rem"
-  }
-})
-
-globalStyle(".story-row--featured h3", {
-  "@container (min-width: 42rem)": {
-    "maxWidth": "18ch",
-    "fontSize": "clamp(2.6rem, 6cqw, 5.4rem)",
-    "fontWeight": "300",
-    "lineHeight": "0.92"
-  }
-})
-
-globalStyle(".story-row--featured .story-summary", {
-  "@container (min-width: 42rem)": {
-    "maxWidth": "50ch",
-    "fontSize": "1.14rem"
-  }
-})
-
-globalStyle(".section-heading", {
-  "@media (min-width: 40rem)": {
-    "gridTemplateColumns": "auto minmax(0, 1fr) auto"
-  }
-})
-
-globalStyle(".section-heading h2", {
-  "@media (min-width: 40rem)": {
-    "textAlign": "center"
-  }
-})
-
-globalStyle(".section-heading a", {
-  "@media (min-width: 40rem)": {
-    "justifySelf": "end"
-  }
-})
-
-globalStyle(".hero", {
+globalStyle(".banner", {
   "@media (min-width: 54rem)": {
     "gridTemplateColumns": "minmax(0, 4fr) minmax(15rem, 1fr)",
     "alignItems": "end"
   }
 })
 
-globalStyle(".hero__folio", {
+globalStyle(".banner__folio", {
   "@media (min-width: 54rem)": {
     "gridTemplateColumns": "1fr",
     "paddingLeft": "1.5rem",
@@ -340,27 +123,22 @@ globalStyle(".hero__folio", {
   }
 })
 
-globalStyle(".index-notes", {
-  "@media (min-width: 54rem)": {
-    "gridTemplateColumns": "minmax(0, 1.45fr) minmax(18rem, 0.55fr)"
+globalStyle(".banner", {
+  "@media (max-width: 39.99rem)": {
+    "gap": "1rem",
+    "padding": "0.9rem 0 1rem"
   }
 })
 
-globalStyle(".story-row:hover h3 a, .archive-list li:hover h2 a, .search-result:hover strong", {
-  "@media (hover: hover) and (pointer: fine)": {
-    "color": "var(--accent-dark)"
+globalStyle(".banner__deck", {
+  "@media (max-width: 39.99rem)": {
+    "margin": "1rem 0 0",
+    "fontSize": "1.05rem"
   }
 })
 
-globalStyle(".story-row__arrow:hover", {
-  "@media (hover: hover) and (pointer: fine)": {
-    "transform": "translate(0.18rem, -0.18rem)"
+globalStyle(".banner h1", {
+  "@media (max-width: 39.99rem)": {
+    "fontSize": "clamp(3.1rem, 14vw, 4.2rem)"
   }
 })
-
-globalStyle(".story-row__arrow", {
-  "@media (hover: hover) and (pointer: fine)": {
-    "transition": "transform 180ms cubic-bezier(0.25, 1, 0.5, 1)"
-  }
-})
-
