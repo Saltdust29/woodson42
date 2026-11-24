@@ -5,6 +5,7 @@ export const SITE = {
   lang: 'en',
   timezone: 'Asia/Shanghai',
   currentYear: 2026,
+  url: 'https://woodson42.com',
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', {

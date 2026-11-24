@@ -1,4 +1,4 @@
-name: Deploy SolidStart site to GitHub Pages
+name: Deploy journal to GitHub Pages
 
 on:
   push:

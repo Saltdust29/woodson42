@@ -1,4 +1,5 @@
 import '../styles/footer.css.js'
+
 import { SITE } from '../lib/site.js'
 
 export default function SiteFooter() {
@@ -9,8 +10,10 @@ export default function SiteFooter() {
         <p>{SITE.subtitle}</p>
       </div>
       <div class="site-footer__meta">
-        <p>Typeset with SolidStart &amp; Vite.</p>
-        <p>© {SITE.currentYear} {SITE.author}.</p>
+        <p>Typeset with Solid 2, Vite &amp; Vercel UI SDK.</p>
+        <p>
+          © {SITE.currentYear} {SITE.author}.
+        </p>
       </div>
       <a class="return-link" href="#top" aria-label="Return to top">
         Return to top ↑

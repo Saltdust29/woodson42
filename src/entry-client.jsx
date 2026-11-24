@@ -1,4 +1,5 @@
-// @refresh reload
-import { mount, StartClient } from '@solidjs/start/client'
+import { hydrate } from '@solidjs/web'
 
-mount(() => <StartClient />, document.getElementById('app'))
+import App from './app.jsx'
+
+hydrate(() => <App url={window.location.pathname} />, document.getElementById('app'))

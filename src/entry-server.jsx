@@ -1,29 +1,32 @@
-// @refresh reload
-import { createHandler, StartServer } from '@solidjs/start/server'
+import { generateHydrationScript, renderToString } from '@solidjs/web'
+import { preferencesScript } from '@ui-sdk/core'
 
-export default createHandler(() => (
-  <StartServer
-    document={({ assets, children, scripts }) => (
-      <html lang="en" data-theme="paper">
-        <head>
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-          <meta name="theme-color" content="#eee7d7" />
-          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&display=swap"
-            rel="stylesheet"
-          />
-          <script innerHTML="document.documentElement.dataset.theme = localStorage.getItem('journal-theme') || 'paper'" />
-          {assets}
-        </head>
-        <body id="top">
-          <div id="app">{children}</div>
-          {scripts}
-        </body>
-      </html>
-    )}
-  />
-))
+import App from './app.jsx'
+import { searchIndex } from './lib/content.js'
+import { documentPage } from './lib/document.js'
+import { headFor } from './lib/meta.js'
+import { theme } from './lib/preferences.js'
+import { matchRoute, prerenderPaths } from './routes.js'
+
+function renderApp(pathname) {
+  return renderToString(() => <App url={pathname} />)
+}
+
+function pageHead(pathname) {
+  return headFor(matchRoute(pathname), pathname)
+}
+
+function headScripts() {
+  return `<script>${preferencesScript([theme])}</script>${generateHydrationScript()}`
+}
+
+function render(pathname, assets) {
+  return documentPage({
+    app: renderApp(pathname),
+    head: pageHead(pathname),
+    assets,
+    scripts: headScripts(),
+  })
+}
+
+export { headScripts, pageHead, prerenderPaths, render, renderApp, searchIndex }

@@ -1,5 +1,3 @@
-import { Suspense } from 'solid-js'
-
 import SiteFooter from './SiteFooter.jsx'
 import SiteHeader from './SiteHeader.jsx'
 
@@ -12,9 +10,7 @@ export default function SiteShell(props) {
 
       <div class="paper-shell">
         <SiteHeader />
-        <main id="main-content">
-          <Suspense>{props.children}</Suspense>
-        </main>
+        <main id="main-content">{props.children}</main>
         <SiteFooter />
       </div>
     </>

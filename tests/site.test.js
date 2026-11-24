@@ -13,6 +13,9 @@ const ARTICLES = [
   'making-things-that-last',
 ]
 
+const TOPICS = ['attention', 'beginnings', 'craft', 'perception', 'software', 'systems']
+const SECTIONS = ['field-notes', 'journal', 'workshop']
+
 before(() => {
   if (process.env.SKIP_BUILD === '1') return
   execSync('pnpm build', { cwd: ROOT, stdio: 'inherit' })
@@ -22,25 +25,33 @@ function read(file) {
   return fs.readFileSync(path.join(OUTPUT, file), 'utf8')
 }
 
-function assets(extension) {
-  const directory = path.join(OUTPUT, '_build', 'assets')
-  return fs.readdirSync(directory).filter((file) => file.endsWith(extension))
+function htmlFiles() {
+  return fs
+    .readdirSync(OUTPUT, { recursive: true })
+    .filter((file) => file.endsWith('.html'))
 }
 
 describe('generated site', () => {
-  test('homepage is prerendered with SolidStart assets', () => {
+  test('homepage is prerendered with the Solid 2 hydration runtime', () => {
     const index = read('index.html')
 
     assert.match(index, /Reality is but/)
     assert.match(index, /Latest dispatches/)
     assert.match(index, /Skip to the journal/)
-    assert.match(index, /type="module"/)
-    assert.match(index, /fonts\.googleapis\.com/)
     assert.match(index, /Reality Is But an Illusion/)
-    assert.doesNotMatch(index, /id="vue-tools"/)
+    assert.match(index, /fonts\.googleapis\.com/)
+    assert.match(index, /<title>woodson42 — Field Notes<\/title>/)
+    assert.match(index, /_hk=/)
+    assert.match(index, /window\._\$HY/)
 
-    assert.ok(assets('.js').length > 0, 'expected a JavaScript bundle')
-    assert.ok(assets('.css').length > 0, 'expected a stylesheet')
+    const scripts = index.match(/<script[^>]*type="module"[^>]*>/g) ?? []
+    assert.ok(scripts.length > 0, 'expected a client entry script')
+
+    const stylesheets = index.match(/<link[^>]*rel="stylesheet"[^>]*>/g) ?? []
+    assert.ok(
+      stylesheets.some((tag) => tag.includes('/assets/')),
+      'expected the compiled stylesheet',
+    )
   })
 
   test('article, archive, colophon and 404 pages are generated', () => {
@@ -51,9 +62,21 @@ describe('generated site', () => {
 
     assert.match(article, /End of dispatch/)
     assert.match(article, /Reality Is But an Illusion/)
+    assert.match(article, /<title>Reality Is But an Illusion — woodson42<\/title>/)
     assert.match(archive, /Making Things That Last/)
-    assert.match(colophon, /SolidStart/)
+    assert.match(colophon, /Vercel UI SDK/)
     assert.match(notFound, /Page not found/)
+    assert.match(notFound, /noindex/)
+  })
+
+  test('the interface is built from Vercel UI SDK parts', () => {
+    const article = read('journal/2026/reality-is-but-an-illusion/index.html')
+
+    assert.match(article, /data-slot="dialog-trigger"/)
+    assert.match(article, /aria-haspopup="dialog"/)
+    assert.match(article, /data-slot="toggle"/)
+    assert.match(article, /data-slot="preferences"/)
+    assert.doesNotMatch(article, /<dialog/)
   })
 
   test('search index is valid and complete', () => {
@@ -78,11 +101,8 @@ describe('generated site', () => {
 
   test('every generated internal link resolves', () => {
     const failures = []
-    const htmlFiles = fs
-      .readdirSync(OUTPUT, { recursive: true })
-      .filter((file) => file.endsWith('.html'))
 
-    for (const file of htmlFiles) {
+    for (const file of htmlFiles()) {
       const pageUrl = `/${file.split(path.sep).join('/')}`
       const html = read(file)
       const targets = [...html.matchAll(/(?:href|src)="([^"]+)"/g)].map((match) => match[1])
@@ -105,16 +125,13 @@ describe('generated site', () => {
     assert.deepEqual(failures, [], `Broken internal links:\n${failures.join('\n')}`)
   })
 
-  test('output no longer depends on Pelican, Vue or the dev server', () => {
-    const htmlFiles = fs
-      .readdirSync(OUTPUT, { recursive: true })
-      .filter((file) => file.endsWith('.html'))
-
-    for (const file of htmlFiles) {
+  test('output no longer depends on SolidStart, Pelican, Vue or the dev server', () => {
+    for (const file of htmlFiles()) {
       const html = read(file)
-      assert.doesNotMatch(html, /127\.0\.0\.1:5173/, `${file} still references the Vite dev server`)
+      assert.doesNotMatch(html, /127\.0\.0\.1:(5173|8000)/, `${file} still references a dev server`)
       assert.doesNotMatch(html, /Pelican/, `${file} still references Pelican`)
       assert.doesNotMatch(html, /Vue Vapor/, `${file} still references Vue Vapor`)
+      assert.doesNotMatch(html, /@solidjs\/start/, `${file} still references SolidStart`)
     }
   })
 
@@ -127,15 +144,8 @@ describe('generated site', () => {
       '404.html',
       'CNAME',
       ...ARTICLES.map((slug) => `journal/2026/${slug}/index.html`),
-      'section/field-notes/index.html',
-      'section/journal/index.html',
-      'section/workshop/index.html',
-      'topic/attention/index.html',
-      'topic/beginnings/index.html',
-      'topic/craft/index.html',
-      'topic/perception/index.html',
-      'topic/software/index.html',
-      'topic/systems/index.html',
+      ...SECTIONS.map((slug) => `section/${slug}/index.html`),
+      ...TOPICS.map((slug) => `topic/${slug}/index.html`),
     ]
 
     for (const file of expected) {

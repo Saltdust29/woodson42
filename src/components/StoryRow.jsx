@@ -1,5 +1,4 @@
 import '../styles/home.css.js'
-import { A } from '@solidjs/router'
 
 import { formatDate } from '../lib/site.js'
 
@@ -11,18 +10,18 @@ export default function StoryRow(props) {
       </div>
       <div class="story-row__body">
         <div class="story-meta">
-          <A href={props.article.categoryUrl}>{props.article.category}</A>
+          <a href={props.article.categoryUrl}>{props.article.category}</a>
           <span>{formatDate(props.article.date)}</span>
           <span>{props.article.reading}</span>
         </div>
         <h3>
-          <A href={props.article.url}>{props.article.title}</A>
+          <a href={props.article.url}>{props.article.title}</a>
         </h3>
         <div class="story-summary" innerHTML={props.article.summaryHtml} />
       </div>
-      <A class="story-row__arrow" href={props.article.url} aria-label={`Read ${props.article.title}`}>
+      <a class="story-row__arrow" href={props.article.url} aria-label={`Read ${props.article.title}`}>
         ↗
-      </A>
+      </a>
     </article>
   )
 }

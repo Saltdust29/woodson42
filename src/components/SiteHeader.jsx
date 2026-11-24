@@ -1,6 +1,7 @@
 import '../styles/header.css.js'
-import JournalTools from './JournalTools.jsx'
+
 import { SITE } from '../lib/site.js'
+import SearchPalette from './SearchPalette.jsx'
 
 export default function SiteHeader() {
   return (
@@ -24,7 +25,7 @@ export default function SiteHeader() {
           <a href="/archive/">Archive</a>
           <a href="/about/">Colophon</a>
         </nav>
-        <JournalTools />
+        <SearchPalette />
       </div>
     </header>
   )

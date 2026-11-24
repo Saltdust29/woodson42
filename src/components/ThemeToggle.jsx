@@ -1,30 +1,21 @@
-import { createSignal, onMount } from 'solid-js'
+import { usePreference } from '@ui-sdk/solid/preferences'
+import { Toggle, ToggleIcon } from '@ui-sdk/solid/toggle'
+
+import { theme } from '../lib/preferences.js'
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = createSignal('paper')
-
-  onMount(() => {
-    setTheme(document.documentElement.dataset.theme === 'ink' ? 'ink' : 'paper')
-  })
-
-  function toggleTheme() {
-    const next = theme() === 'paper' ? 'ink' : 'paper'
-    setTheme(next)
-    document.documentElement.dataset.theme = next
-    localStorage.setItem('journal-theme', next)
-  }
+  const state = usePreference(theme)
+  const night = () => state().value === 'ink'
 
   return (
-    <button
+    <Toggle
       class="tool-button tool-button--theme"
-      type="button"
-      aria-label={theme() === 'paper' ? 'Use night reading theme' : 'Use paper reading theme'}
-      onClick={toggleTheme}
+      pressed={night()}
+      onPressedChange={(pressed) => theme.set(pressed ? 'ink' : 'paper')}
+      aria-label={night() ? 'Use paper reading theme' : 'Use night reading theme'}
     >
-      <span class="theme-glyph" aria-hidden="true">
-        {theme() === 'paper' ? '◐' : '◑'}
-      </span>
-      <span>{theme() === 'paper' ? 'Ink' : 'Paper'}</span>
-    </button>
+      <ToggleIcon class="theme-glyph">{night() ? '◑' : '◐'}</ToggleIcon>
+      <span>{night() ? 'Paper' : 'Ink'}</span>
+    </Toggle>
   )
 }

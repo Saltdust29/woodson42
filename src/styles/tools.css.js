@@ -51,6 +51,10 @@ globalStyle(".theme-glyph", {
 })
 
 globalStyle(".search-dialog", {
+  "position": "fixed",
+  "inset": "0",
+  "margin": "auto",
+  "height": "fit-content",
   "width": "min(66rem, calc(100% - 1.5rem))",
   "maxHeight": "min(48rem, calc(100dvh - 1.5rem))",
   "padding": "0",
@@ -128,6 +132,16 @@ globalStyle(".search-field__count", {
 globalStyle(".search-results", {
   "minHeight": "12rem",
   "marginTop": "1.5rem"
+})
+
+globalStyle(".search-result mark", {
+  "background": "transparent",
+  "color": "var(--accent-dark)",
+  "borderBottom": "1px solid currentColor"
+})
+
+globalStyle(".search-result[data-highlighted]", {
+  "background": "color-mix(in oklch, var(--ink) 6%, transparent)"
 })
 
 globalStyle(".search-result", {
